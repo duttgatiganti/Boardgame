@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app2
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/duttgatiganti/Boardgame.git
+    targetRevision: HEAD
+    path: .  # Manifests are stored at the root of the repo
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: app2-ns
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
